@@ -1,12 +1,16 @@
 <?php
 include "includes/_header.php";
 
-$login = new Login("admin", "root");
+$username = "admin";
+$password = "root";
 
-if($login == true){
+$login = new Login();
+$loginResult = $login->login($username, $password);
+
+if($loginResult == true){
     session_start();
-    $_SESSION['user'] = $loginCreds['user'];
-    header("location: ". $galleryPageLink);
+    $_SESSION['user'] = $username;
+    header("location: ". Gallery_Page_Link);
 }
 else {
     echo "Wrong username/password";

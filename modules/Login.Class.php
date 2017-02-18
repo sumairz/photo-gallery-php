@@ -2,13 +2,38 @@
 
 class Login {
 
-    public function __construct($username, $password){
+    public function __construct(){}
 
+
+    /**
+    * Handle the login feature
+    * @param
+    *   $username (string), $password (string)
+    *
+    * @return 
+    *   Boolean
+    **/
+    public function login($username, $password){
         $loginCreds = $this->getCredentials();
 
         if($loginCreds['user'] == $username && $loginCreds['password'] == $password) {
             return true;            
         }
+    }
+
+    /**
+    * Handle the logout feature by destroying session
+    * @param
+    *   NONE
+    *
+    * @return 
+    *   Boolean
+    **/
+    public function logout(){
+        unset($_SESSION['user']);
+        session_destroy();
+
+        return true;
     }
 
 

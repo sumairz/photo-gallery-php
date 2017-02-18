@@ -27,6 +27,60 @@ class Gallery {
         return $final;
     }
 
+    /**
+    * Create folder using the name argument
+    * @param
+    *   $name (string)
+    *
+    * @return 
+    *   Boolean
+    **/
+    public function addGallery($name) {
+        if(!file_exists(Gallery_Folder.$name)) {
+            if(mkdir(Gallery_Folder.$name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+    * Delete folder using the name argument
+    * @param
+    *   $name (string)
+    *
+    * @return 
+    *   Boolean
+    **/
+    public function deleteGallery($name) {
+         if(file_exists(Gallery_Folder.$name)) {
+            if(rmdir(Gallery_Folder.$name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+    * rename a gallery folder name
+    * @param
+    *   $currentName (string)
+    *   $newName (string)
+    *
+    * @return 
+    *   Boolean
+    **/
+    public function editGalleryName($currentName, $newName){
+        if(file_exists(Gallery_Folder.$currentName)) {
+            if(rename(Gallery_Folder.$currentName, Gallery_Folder.$newName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public function show($data) {
         echo "<pre>";

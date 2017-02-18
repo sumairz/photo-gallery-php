@@ -16,9 +16,15 @@ class Login {
     public function login($username, $password){
         $loginCreds = $this->getCredentials();
 
-        if($loginCreds['user'] == $username && $loginCreds['password'] == $password) {
-            return true;            
-        }
+        foreach($loginCreds as $key => $value) {
+            if($loginCreds[$key]['user'] == $username && $loginCreds[$key]['password'] == $password) {
+                $data['type'] = $loginCreds[$key]['type'];
+                $data['result'] = true;
+
+                return $data;
+            }
+        }      
+        exit;  
     }
 
     /**
@@ -49,8 +55,11 @@ class Login {
         $jsonRead = file_get_contents(CREDENTIALS_FILE);
         $jsonData = json_decode($jsonRead, true);
         
-        $data['user'] = $jsonData['credentials']['user'];
-        $data['password'] = $jsonData['credentials']['password'];
+        foreach($jsonData['credentials'] as $key => $value) {           
+            $data[$key]['user'] = $jsonData['credentials'][$key]['user'];
+            $data[$key]['password'] = $jsonData['credentials'][$key]['password'];
+            $data[$key]['type'] = $jsonData['credentials'][$key]['type'];
+        }       
 
         return $data;
     }

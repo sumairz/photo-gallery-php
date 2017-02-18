@@ -1,4 +1,5 @@
 <?php
+include "includes/_process_include.php";
 include "includes/_header.php";
 include "includes/_login_check.php";
 

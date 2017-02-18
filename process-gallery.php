@@ -12,20 +12,48 @@ if (!array_key_exists("action", $_POST)) {
     exit();
 }
 
+$galleryOBJ = new Gallery();
+
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
     $action = $_POST['action'];
 
     switch($action) {
-        case 'saveCart':
-            $result   = $orderMan->saveCartItems($orderGUID);
+        case 'addGallery':
+            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
 
-            if($result != false){
+            $result = $galleryOBJ->addGallery($galleryName);
+
+            if($result == true){
                 $response['success'] = true;
             }
 
             echo json_encode($response);
             break; //END 'saveCart'
 
+        case "deleteGallery":
+            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+            
+            $result = $galleryOBJ->deleteGallery($galleryName);
+            
+            if($result == true){
+                $response['success'] = true;
+            }
+
+            echo json_encode($response);
+            break;
+
+        case "editGallery":
+            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+            $newGalleryName = htmlspecialchars(trim($_POST['newName']));
+            
+            $result = $galleryOBJ->editGalleryName($galleryName,$newGalleryName);
+            
+            if($result == true){
+                $response['success'] = true;
+            }
+            
+            echo json_encode($response);
+            break;
         default:
             break; // END 'default'
 

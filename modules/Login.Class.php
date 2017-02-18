@@ -23,8 +23,8 @@ class Login {
 
                 return $data;
             }
-        }      
-        exit;  
+        }
+        return false;      
     }
 
     /**

@@ -19,12 +19,28 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     switch($action) {
         case 'login':
-            
+            $username = htmlspecialchars(trim($_POST['username']));
+            $password = htmlspecialchars(trim($_POST['password']));
+
+            $result = $loginOBJ->login($username,$password);
+
+            if($result == true) {
+                $_SESSION['user'] = $username;
+                $_SESSION['type'] = $loginResult['type'];
+                
+                $response['success']  = true;
+            }
+                        
             echo json_encode($response);
             break; //END login
 
         case 'logout':
-            
+            $result = $loginOBJ->logout();
+
+            if($result == true) {
+                $response['success']  = true;
+            }
+
             echo json_encode($response);
             break; //END login
 

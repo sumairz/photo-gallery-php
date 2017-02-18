@@ -12,14 +12,19 @@ if (!array_key_exists("action", $_POST)) {
     exit();
 }
 
+$photosOBJ = new Photos();
+
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
     $action = $_POST['action'];
 
     switch($action) {
-        case 'saveCart':
-            $result   = $orderMan->saveCartItems($orderGUID);
+        case 'deletePhoto':
+            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+            $photoName = htmlspecialchars(trim($_POST['photoName']));
 
-            if($result != false){
+            $result = $photosOBJ->deleteGalleryPhotos($galleryName,$photoName);
+
+            if($result == true){
                 $response['success'] = true;
             }
 

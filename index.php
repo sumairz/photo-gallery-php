@@ -1,8 +1,16 @@
 <?php
+include "includes/_header.php";
 
-$string = file_get_contents("/data/credentials.json");
-$json_a = json_decode($string, true);
-echo $json_a['John'][status];
-echo $json_a['Jennifer'][status];
+$login = new Login("admin", "root");
 
+if($login == true){
+    session_start();
+    $_SESSION['user'] = $loginCreds['user'];
+    header("location: ". $galleryPageLink);
+}
+else {
+    echo "Wrong username/password";
+}
+
+include "includes/_footer.php";
 ?>

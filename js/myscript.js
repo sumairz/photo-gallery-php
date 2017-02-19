@@ -131,3 +131,15 @@ $("#deletePhotobtn").on("click", function(){
       });
     }
 });
+
+
+$(document).on("click", '#popImage', function(){
+    var imgSrc = $(this).data("imgsrc");
+    $('#imagepreview').attr('src', imgSrc); 
+    $('#imagemodal').modal('show');
+});
+
+// $('#popImage').on('click', function() {
+// 			$('.imagepreview').attr('src', $(this).find('img').attr('src'));
+// 			$('#imagemodal').modal('show');   
+// 		});		

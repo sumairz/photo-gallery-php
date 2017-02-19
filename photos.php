@@ -55,7 +55,7 @@ $result    = $photosObj->getAllGalleryPhotos($gallery);
                     </ul>
                 </div> <!-- End Dropdown action -->
                 <?php } ?>
-                <a class="thumbnail" href="">
+                <a class="thumbnail" href="javascript:void(0)" id="popImage" data-imgsrc="<?=Gallery_Folder.$gallery."/".$photo?>">
                     <img class="img-responsive" src="<?=Gallery_Folder.$gallery."/".$photo?>" alt="">
                 </a>
             </div>
@@ -66,6 +66,21 @@ $result    = $photosObj->getAllGalleryPhotos($gallery);
         }
     ?>
 </div> <!-- End row -->
+
+
+
+<div id="imagemodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">      
+      <div class="modal-body">
+        <img src="" id="imagepreview" class="img-responsive" >
+      </div>      
+    </div>
+
+  </div>
+</div>
 
 <?php
 include "includes/_footer.php";

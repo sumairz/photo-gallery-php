@@ -19,37 +19,52 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     switch($action) {
         case 'addGallery':
-            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+            if($_SESSION['type'] == "admin") {
+                $galleryName = htmlspecialchars(trim($_POST['galleryName']));
 
-            $result = $galleryOBJ->addGallery($galleryName);
+                $result = $galleryOBJ->addGallery($galleryName);
 
-            if($result == true){
-                $response['success'] = true;
+                if($result == true){
+                    $response['success'] = true;
+                }
+            }
+            else {
+                $response['success'] = false;
             }
 
             echo json_encode($response);
             break; //END 'saveCart'
 
         case "deleteGallery":
-            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
-            
-            $result = $galleryOBJ->deleteGallery($galleryName);
-            
-            if($result == true){
-                $response['success'] = true;
+            if($_SESSION['type'] == "admin") {
+                $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+                
+                $result = $galleryOBJ->deleteGallery($galleryName);
+                
+                if($result == true){
+                    $response['success'] = true;
+                }
+            }
+            else {
+                $response['success'] = false;
             }
 
             echo json_encode($response);
             break;
 
         case "editGallery":
-            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
-            $newGalleryName = htmlspecialchars(trim($_POST['newName']));
-            
-            $result = $galleryOBJ->editGalleryName($galleryName,$newGalleryName);
-            
-            if($result == true){
-                $response['success'] = true;
+            if($_SESSION['type'] == "admin") {
+                $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+                $newGalleryName = htmlspecialchars(trim($_POST['newName']));
+                
+                $result = $galleryOBJ->editGalleryName($galleryName,$newGalleryName);
+                
+                if($result == true){
+                    $response['success'] = true;
+                }
+            }
+            else {
+                $response['success'] = false;
             }
             
             echo json_encode($response);

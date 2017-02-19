@@ -19,15 +19,19 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     switch($action) {
         case 'deletePhoto':
-            $galleryName = htmlspecialchars(trim($_POST['galleryName']));
-            $photoName = htmlspecialchars(trim($_POST['photoName']));
+            if($_SESSION['type'] == "admin") {
+                $galleryName = htmlspecialchars(trim($_POST['galleryName']));
+                $photoName   = htmlspecialchars(trim($_POST['photoName']));
 
-            $result = $photosOBJ->deleteGalleryPhotos($galleryName,$photoName);
+                $result = $photosOBJ->deleteGalleryPhotos($galleryName,$photoName);
 
-            if($result == true){
-                $response['success'] = true;
+                if($result == true){
+                    $response['success'] = true;
+                }               
             }
-
+            else{
+                $response['success'] = false;
+            }
             echo json_encode($response);
             break; //END 'saveCart'
 

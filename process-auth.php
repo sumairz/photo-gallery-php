@@ -1,6 +1,8 @@
 <?php
 include "includes/_process_include.php";
 
+$loginOBJ = new Login();
+
 // structure JSON response
 $response = array();
 $response['success']  = false;
@@ -12,7 +14,6 @@ if (!array_key_exists("action", $_POST)) {
     exit();
 }
 
-$loginOBJ = new Login();
 
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
     $action = $_POST['action'];
@@ -24,9 +25,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
             $result = $loginOBJ->login($username,$password);
 
-            if($result == true) {
+            if($result != false) {
                 $_SESSION['user'] = $username;
-                $_SESSION['type'] = $loginResult['type'];
+                $_SESSION['type'] = $result['type'];
                 
                 $response['success']  = true;
             }

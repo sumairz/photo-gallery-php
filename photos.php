@@ -1,13 +1,72 @@
 <?php
+include "includes/_process_include.php";
 include "includes/_header.php";
 include "includes/_login_check.php";
 
-$galleryName = htmlspecialchars(trim($_GET['gallery']));
+$gallery = htmlspecialchars(trim($_GET['gallery']));
 
-$photosOBJ = new Photos();
-$photos = $photosOBJ->getAllGalleryPhotos($galleryName);
+$photosObj = new Photos();
+$result    = $photosObj->getAllGalleryPhotos($gallery);
 
-$photosOBJ->show($photos);
-//$photosOBJ->deleteGalleryPhotos($galleryName,"IMG_20160812_171108.jpg");
+?>
 
+<div class="row">
+
+    <div class="col-lg-12">
+        <h1 class="page-header">Photos</h1>
+    </div>
+
+    <?php 
+    if($_SESSION['type'] == "admin") {
+    ?>
+    <form action="image_upload.php" method="post" enctype="multipart/form-data"> 
+    <div><strong>Only Jpeg allowed</strong></div>   
+    <div class="row">  
+        <div class="col-lg-6">
+            <div class="input-group">            
+                <input type="file" name="image" class="form-control" placeholder="Upload photo" accept="image/jpeg">
+                <input type="hidden" name="galleryName" value="<?= $gallery ?>">
+                <span class="input-group-btn">                   
+                    <button class="btn btn-default" type="submit">Upload</button>
+                </span>
+                </div><!-- /input-group -->
+             
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    </form>
+    <?php } ?>
+    <hr >
+
+    <?php
+        if(!empty($result)) {
+        foreach($result as $photo) {
+        ?>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <?php
+                if($_SESSION['type'] == "admin") {
+                ?>
+                <!-- Dropdown action -->
+                <div class="btn-group">
+                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)" data-galleryname="<?=$gallery?>" data-photoname="<?=$photo?>" id="deletePhotobtn">Delete Photo</a></li>
+                    </ul>
+                </div> <!-- End Dropdown action -->
+                <?php } ?>
+                <a class="thumbnail" href="">
+                    <img class="img-responsive" src="<?=Gallery_Folder.$gallery."/".$photo?>" alt="">
+                </a>
+            </div>
+        <?php
+        }
+        } else{
+            echo '<div class="col-lg-3"><p class="alert alert-info">No Photos Found</p></div>';
+        }
+    ?>
+</div> <!-- End row -->
+
+<?php
+include "includes/_footer.php";
 ?>

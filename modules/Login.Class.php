@@ -64,5 +64,12 @@ class Login {
         return $data;
     }
 
+    public function show($data) {
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        exit;
+    }
+
 } // End Login Class
 ?>

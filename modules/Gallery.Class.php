@@ -54,10 +54,17 @@ class Gallery {
     *   Boolean
     **/
     public function deleteGallery($name) {
-         if(file_exists(Gallery_Folder.$name)) {
-            if(rmdir(Gallery_Folder.$name)){
-                return true;
+        $dir = Gallery_Folder.$name;
+
+         if(file_exists($dir)) {
+            foreach(scandir($dir) as $file) {
+                if ('.' === $file || '..' === $file) continue;
+                if (is_dir("$dir/$file")) rmdir_recursive("$dir/$file");
+                else unlink("$dir/$file");
             }
+            
+            if(rmdir($dir))
+                return true;
         }
         return false;
     }
